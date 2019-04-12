@@ -1,4 +1,4 @@
-# pomodorotimer
+# Webshop
 
 ## Project setup
 ```
