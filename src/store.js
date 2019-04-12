@@ -6,22 +6,26 @@ import api from "./api";
 Vue.use(Vuex);
 
 export const actions = {
-  Fecth_Data: "fetchData",
-  Add_ToCart: "addToCart"
+  fetchData: "fetchData",
+  addToCart: "addToCart"
+};
+
+export const getters = {
+  cartCount: "cartCount"
 };
 
 const _mutations = {
-  Add_Clothing: "addClothing",
-  Add_Brand: "addBrand",
-  Add_ToCart: "addToCart",
-  Fetch_Data: "fetchData"
+  addClothing: "addClothing",
+  addBrand: "addBrand",
+  addToCart: "addToCart",
+  fetchData: "fetchData"
 };
 
 const store = new Vuex.Store({
   state: {
     clothes: [],
     brands: [],
-    cart: 0
+    cart: []
   },
   mutations: {
     addClothing(state, payload) {
@@ -29,22 +33,28 @@ const store = new Vuex.Store({
       state.clothes.push(payload);
     },
     addBrand(state, payload) {
+      // API kald til at tilføje det til databasen
       state.brands.push(payload);
     },
-    addToCart(state) {
-      state.cart++;
+    addToCart(state, payload) {
+      state.cart.push(payload);
     },
-    fetchData: async function (state) {
+    fetchData: async function(state) {
       state.brands = await api.getBrands();
       state.clothes = await api.getClothes();
     }
   },
   actions: {
-    fetchData: async function() {
-      store.commit(_mutations.Fetch_Data);
+    fetchData: async function({ commit }) {
+      commit(_mutations.fetchData);
     },
-    addToCart: function () {
-      store.commit(_mutations.Add_ToCart);
+    addToCart: function({ commit }, cartItem) {
+      commit(_mutations.addToCart, cartItem);
+    }
+  },
+  getters: {
+    cartCount: state => {
+      return state.cart.length;
     }
   }
 });

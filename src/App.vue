@@ -20,7 +20,7 @@ export default {
   },
   computed: mapState(["brands", "clothes"]),
   created: function() {
-    this.$store.dispatch(actions.Fecth_Data);
+    this.$store.dispatch(actions.fetchData);
   }
 };
 </script>

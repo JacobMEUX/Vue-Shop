@@ -16,7 +16,7 @@
       </a>
       <a-popconfirm
         title="Are you sure you want to add this to your cart?"
-        @confirm="addToCart"
+        @confirm="onAddToCartClick"
         okText="Yes"
         cancelText="No"
       >
@@ -35,7 +35,6 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 import { actions } from '../../store';
 
 export default {
@@ -48,14 +47,14 @@ export default {
     };
   },
   methods: {
-    ...mapActions([
-      actions.Add_ToCart
-    ]),
-    onGotoClick: function() {
+    onGotoClick: function () {
       // Go to page with product
     },
-    onImageLoaded: function() {
+    onImageLoaded: function () {
       this.loaded = true;
+    },
+    onAddToCartClick: function () {
+      this.$store.dispatch(actions.addToCart, this.item)
     }
   }
 };
