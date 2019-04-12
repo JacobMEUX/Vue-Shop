@@ -1,0 +1,66 @@
+﻿@page
+@model Web.Pages.Admin.CreateModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+@using ServiceLayer.DTOs.Enums
+<h1>Create</h1>
+
+<h4>Clothing</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Clothing.Title" class="control-label"></label>
+                <input asp-for="Clothing.Title" class="form-control" />
+                <span asp-validation-for="Clothing.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clothing.Description" class="control-label"></label>
+                <input asp-for="Clothing.Description" class="form-control" />
+                <span asp-validation-for="Clothing.Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clothing.Price" class="control-label"></label>
+                <input asp-for="Clothing.Price" class="form-control" />
+                <span asp-validation-for="Clothing.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clothing.Size" class="control-label"></label>
+                <select asp-for="Clothing.Size" asp-items="@Html.GetEnumSelectList(typeof(SizesDTO))" class="form-control"></select>
+                <span asp-validation-for="Clothing.Size" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clothing.Color" class="control-label"></label>
+                <select asp-for="Clothing.Color"  asp-items="@Html.GetEnumSelectList(typeof(ColorsDTO))" class="form-control"></select>
+                <span asp-validation-for="Clothing.Color" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clothing.FKBrandId" class="control-label"></label>
+                <select asp-for="Clothing.FKBrandId" class="form-control" asp-items="@Model.Brands"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Clothing.FKCategoryId" class="control-label"></label>
+                <select asp-for="Clothing.FKCategoryId" class="form-control" asp-items="@Model.Categories"></select>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="Clothing.FKImageId" class="control-label"></label>
+                <select asp-for="Clothing.FKImageId" class="form-control" asp-items="ViewBag.FKImageId"></select>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

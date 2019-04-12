@@ -1,0 +1,21 @@
+[
+  {
+    "outputFileName": "wwwroot/js/site.min.js",
+    "inputFiles": [
+      "wwwroot/js/site.js"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/css/StyleBundle.css",
+    "inputFiles": [
+      "wwwroot/css/FAS.css",
+      "wwwroot/css/site.css"
+    ]
+  },
+  {
+    "outputFileName": "wwwroot/js/CustomBootstrap4Validation.min.js",
+    "inputFiles": [
+      "wwwroot/js/CustomBootstrap4Validation.js"
+    ]
+  }
+]

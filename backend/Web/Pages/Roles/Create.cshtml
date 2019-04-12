@@ -1,0 +1,19 @@
+﻿@page
+@model Web.Pages.Roles.CreateModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h1 class="bg-info text-white">Create a Role</h1>
+<a asp-page="Index" class="btn btn-secondary">Back</a>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form asp-page="Create" method="post">
+    <div class="form-group">
+        <label>Name:</label>
+        <input name="Name" class="form-control" />
+    </div>
+    <button type="submit" asp-page-handler="Create" class="btn btn-primary">Create</button>
+</form>

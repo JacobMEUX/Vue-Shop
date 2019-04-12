@@ -1,0 +1,131 @@
+﻿@model List<OrderLineDTO>
+@using ServiceLayer.DTOs;
+
+
+@if (Model != null)
+{
+    <input type="hidden" value="@Model.Count()" id="ShoppingCartCounter" />
+    <!-- The Modal -->
+    <div class="modal" id="myModal" style="display:none; max-width:1250px;left: auto;right: auto;">
+        <div class="modal-dialog" style="width:auto; max-width:none;">
+            <div class="modal-content">
+
+                <!-- ModalHeader -->
+                <div class="modal-header">
+                    <h4 class="modal-title" style="align-content:center"><i class="fas fa-shopping-basket"></i> Kurven <i class="fas fa-shopping-basket"></i></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+
+                    <table class="table">
+                        <thead>
+                            <tr style="text-align:center">
+                                <th>Title</th>
+                                <th>Price</th>
+                                <th>Antal</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @foreach (OrderLineDTO orderLine in Model)
+                            {
+
+
+                                <tr style="width:auto">
+
+                                    <td style="width:auto">
+                                        @orderLine.Clothing.Title
+                                    </td>
+                                    <td style="width:auto">
+                                        @string.Format("{0:C}", orderLine.Clothing.Price)
+                                    </td>
+                                    <td style="width:auto">
+
+
+                                        @*
+
+
+                                             <form method="post"
+                                                     data-ajax="true"
+                                                     data-ajax-method="post"
+                                                     data-ajax-complete="completed"
+                                                     data-ajax-confirm="Are you sure you want to do this?">
+                                                 <input type="text" name="name" /><input type="submit"/>
+                                             </form>
+
+                                            <label id="hej">j</label>
+
+
+                                        *@
+
+
+
+
+
+
+
+                                        <form method="post">
+                                            <div class="input-group input-group-lg">
+
+                                                <div class="input-group-prepend">
+                                                    <button asp-page-handler="RemoveOne" asp-page="../Clothing/Index" asp-route-clothId="@orderLine.FKClothingId" class="btn btn-sm btn-danger input-group-text"><i class="fas fa-minus-square"></i></button>
+                                                </div>
+                                                <input asp-for="@orderLine.Amount" style="width:auto" class="form-control" disabled />
+                                                <div class="input-group-append">
+                                                    <button asp-page-handler="AddOne" asp-page="../Clothing/Index" asp-route-clothId="@orderLine.FKClothingId" class="btn btn-sm btn-success input-group-text"><i class="fas fa-plus-square"></i></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    <td>
+                                        <form method="post">
+                                            <button asp-page-handler="delete" asp-page="../Clothing/Index" asp-route-clothId="@orderLine.FKClothingId" class="btn btn-sm btn-danger">Fjern</button>
+                                        </form>
+                                    </td>
+
+                                </tr>
+
+
+                            }
+
+
+                            <tr>
+                                <td>
+                                    I Alt:
+                                </td>
+                                <td>
+                                    @TempData["TotalPrice"]
+                                </td>
+                                <td></td>
+                                <td>
+                                    -
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+
+                    <a href="/Checkout" class="btn btn-success">Gå til checkout</a>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Fortsæt med at shoppe</button>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    @*@section scripts{
+            <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+            <script>
+                    completed = function (xhr) {
+                        alert(`Wow ${xhr.responseText}, you are brave!`);
+                    };
+            </script>
+        }*@
+
+}

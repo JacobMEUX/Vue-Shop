@@ -1,0 +1,146 @@
+﻿@page
+@model Web.Pages.Clothing.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+@using ServiceLayer.DTOs;
+@using ServiceLayer.DTOs.Enums;
+
+
+
+<form>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group">
+
+
+                <div class="input-group input-group-lg">
+                    <select asp-for="SelectedBrandId" asp-items="Model.Brands" class="form-control ">
+                        <option value="" selected>-- Vælg et Brand --</option>
+                    </select>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+
+
+                <div class="input-group input-group-lg">
+                    <select asp-for="SelectedCategoryId" asp-items="Model.Categories" class="form-control ">
+                        <option value="" selected>-- Vælg en Kategori --</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+
+
+                <div class="input-group input-group-lg">
+
+                    <select asp-for="SelectedColor" asp-items="@Html.GetEnumSelectList(typeof(ColorsDTO))" class="form-control ">
+                        <option value="" selected>-- Vælg en Farve --</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+
+
+                <div class="input-group input-group-lg">
+
+                    <select asp-for="SelectedSize" asp-items="@Html.GetEnumSelectList(typeof(SizesDTO))" class="form-control ">
+                        <option value="" selected>-- Vælg en Størrelse --</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+
+
+                <div class="input-group input-group-lg">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" asp-for="SelectedSortOrder">Sorter efter:</label>
+                    </div>
+
+                    <select asp-for="SelectedSortOrder" asp-items="@Html.GetEnumSelectList(typeof(SortOrderDTO))" class="form-control">
+                        <option value="" selected>-- Vælg en Sortering --</option>
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <div class="col-md-3">
+            <div class="form-group">
+
+
+                <div class="input-group input-group-lg">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" asp-for="PageSize">Antal per side:</label>
+                    </div>
+
+                    <select asp-for="PageSize" class="form-control ">
+                        <option selected value="">-- Vælg antal per side --</option>
+                        @for (int i = 1; i < 6; i++)
+                        {
+                            int val = i * 3;
+                            <option value="@val">@val</option>
+                        }
+                    </select>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="form-group">
+
+
+                <div class="input-group input-group-lg">
+
+                    <input type="text" asp-for="Search" placeholder="Søgefelt" class="form-control">
+
+                    <div class="input-group-append">
+                        <button type="submit" asp-page="./Index" style="height:100%" class="form-control btn-success"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    @if (TempData["Message"] != null)
+    {
+        <p class="alert alert-info">@TempData["Message"]</p>
+    }
+
+
+    <div>
+        <ul class="pagination">
+            @for (var i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.CurrentPage ? "active" : "")">
+                    <input type="submit" class="page-link" asp-page="./Index" asp-for="CurrentPage" value="@i" />
+                </li>
+            }
+        </ul>
+    </div>
+
+</form>
+@*<partial name="./ShoppingCart/_ShoppingCartIndex" model="@Model.OrderLineDTOs" />*@
+<partial name="_ClothingIndexPartial" model="Model.Clothing" />

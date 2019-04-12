@@ -1,0 +1,95 @@
+﻿@model List<OrderLineDTO>
+@using ServiceLayer.DTOs;
+
+
+@if (Model != null)
+{
+
+    <!-- The Modal -->
+    <div class="modal" id="myModal" style="display:none; max-width:1250px;left: auto;right: auto;">
+        <div class="modal-dialog" style="width:auto; max-width:none;">
+            <div class="modal-content">
+
+                <!-- ModalHeader -->
+                <div class="modal-header">
+                    <h4 class="modal-title" style="align-content:center"><i class="fas fa-shopping-basket"></i> Kurven <i class="fas fa-shopping-basket"></i></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <!-- Modal body -->
+                <div class="modal-body" style="max-height: calc(100vh - 200px); overflow-y: auto;">
+
+                    <table class="table">
+                        <thead>
+                            <tr style="text-align:center">
+                                <th>Title</th>
+                                <th>Price</th>
+                                <th>Antal</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @foreach (var orderLine in Model.OrderBy(o => o.FKClothingId))
+                            {
+
+
+                                <tr style="width:auto">
+                                    <td style="width:auto">
+                                        @orderLine.Clothing.Title
+                                    </td>
+                                    <td style="width:auto">
+                                        @string.Format("{0:C}", orderLine.Clothing.Price)
+                                    </td>
+                                    <td style="width:auto">
+                                        <div class="input-group input-group-lg">
+
+                                            <div class="input-group-prepend">
+
+                                                <button asp-page="./Index" formmethod="post" asp-page-handler="RemoveOne" name="clothId" value="@orderLine.FKClothingId" class="btn btn-sm btn-danger input-group-text"><i class="fas fa-minus-square"></i></button>
+                                            </div>
+                                            <input asp-for="@orderLine.Amount" style="width:auto" class="form-control" disabled />
+                                            <div class="input-group-append">
+                                                <button asp-page="./Index" formmethod="post" asp-page-handler="AddOne" class="btn btn-sm btn-success input-group-text" name="clothId" value="@orderLine.FKClothingId"><i class="fas fa-plus-square"></i></button>
+                                            </div>
+                                        </div>
+
+                                    <td>
+                                        <button asp-page="./Index" formmethod="post" asp-page-handler="delete" class="btn btn-danger" name="clothId" value="@orderLine.FKClothingId">Fjern</button>
+                                    </td>
+                                </tr>
+
+                            }
+
+
+                            <tr>
+                                <td>
+                                    I Alt:
+                                </td>
+                                <td>
+                                    @Model.Sum(item => item.Amount * item.Clothing.Price);
+                                </td>
+                                <td></td>
+                                <td>
+                                    -
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+
+                    <a href="/Checkout" class="btn btn-success">Gå til checkout</a>
+                    <button type="button" class="btn btn-info" data-dismiss="modal">Fortsæt med at shoppe</button>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+
+}
