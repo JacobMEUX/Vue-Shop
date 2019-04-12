@@ -1,56 +1,56 @@
 <template>
-  <a-card hoverable>
+  <a-card hoverable style="min-height: 100%">
     <img
       v-show="loaded"
-      alt="example"
-      :src="item.image"
+      :alt="item.image.altText"
+      :src="item.image.url"
       slot="cover"
       @load="onImageLoaded"
-      class="card-img"
     >
-    <a-spin>
-      <a-icon v-show="!loaded" slot="indicator" type="loading" class="loader" spin/>
+    <a-spin class="loader">
+      <a-icon v-show="!loaded" slot="indicator" type="loading" spin/>
     </a-spin>
     <template class="ant-card-actions" slot="actions">
       <a>
         <a-icon type="question-circle"/>View
       </a>
-      <a>
-        <a-icon type="shopping"/>Buy
-      </a>
+      <a-popconfirm
+        title="Are you sure you want to add this to your cart?"
+        @confirm="addToCart"
+        okText="Yes"
+        cancelText="No"
+      >
+        <a-icon slot="icon" type="exclamation-circle" theme="twoTone"/>
+        <a-icon type="shopping-cart"/>
+        Add to cart
+      </a-popconfirm>
     </template>
-    <a-card-meta :title="item.name" :description="description">
+    <a-card-meta :title="item.name" :description="item.description">
       <a-divider orientation="right">Price</a-divider>
       <h5>{{item.price}}</h5>
     </a-card-meta>
-    <a-divider />
+    <a-divider/>
     <h4 class="text-center">{{item.price}} DKK</h4>
   </a-card>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import { actions } from '../../store';
+
 export default {
+  props: {
+    item: Object
+  },
   data: function() {
     return {
       loaded: false
     };
   },
-  props: {
-    item: Object
-  },
-  computed: {
-    description: function() {
-      return (
-        this.item.description.substring(0, 95) +
-        (this.item.description.length > 95 ? "..." : "")
-      );
-    }
-  },
   methods: {
-    onBuyClick: function() {
-      // Add to cart directly
-      // Kast https://vue.ant.design/components/message/  eksempel "Display a sequence of messages" -> Lav en loading, og bagefter en success hvis den er tilføjet til kurven.
-    },
+    ...mapActions([
+      actions.Add_ToCart
+    ]),
     onGotoClick: function() {
       // Go to page with product
     },

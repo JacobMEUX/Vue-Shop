@@ -1,22 +1,26 @@
 <template>
   <div id="app">
-    <ItemCards :items="items"/>
+    <Navbar/>
+    <ItemCards :items="clothes"/>
   </div>
 </template>
 
 <script>
-import store from "./store/store.js"
-import { mapState } from 'vuex'
+import store, { actions } from "./store.js";
+import { mapState } from "vuex";
 import ItemCards from "./components/webshop/ItemCards";
+import Navbar from "./components/Navbar";
 
 export default {
   name: "app",
   store,
   components: {
-    ItemCards
+    ItemCards,
+    Navbar
   },
-  computed: mapState([
-    'items'
-  ])
+  computed: mapState(["brands", "clothes"]),
+  created: function() {
+    this.$store.dispatch(actions.Fecth_Data);
+  }
 };
 </script>
