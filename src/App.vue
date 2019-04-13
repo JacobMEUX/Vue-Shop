@@ -8,7 +8,7 @@
 <script>
 import store, { actions } from "./store.js";
 import { mapState } from "vuex";
-import ItemCards from "./components/webshop/ItemCards";
+import ItemCards from "./components/items/ItemCards";
 import Navbar from "./components/Navbar";
 
 export default {

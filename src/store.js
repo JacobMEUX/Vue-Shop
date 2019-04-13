@@ -7,7 +7,8 @@ Vue.use(Vuex);
 
 export const actions = {
   fetchData: "fetchData",
-  addToCart: "addToCart"
+  addToCart: "addToCart",
+  clearCart: "clearCart"
 };
 
 export const getters = {
@@ -18,6 +19,7 @@ const _mutations = {
   addClothing: "addClothing",
   addBrand: "addBrand",
   addToCart: "addToCart",
+  clearCart: "clearCart",
   fetchData: "fetchData"
 };
 
@@ -39,6 +41,9 @@ const store = new Vuex.Store({
     addToCart(state, payload) {
       state.cart.push(payload);
     },
+    clearCart(state) {
+      state.cart = [];
+    },
     fetchData: async function(state) {
       state.brands = await api.getBrands();
       state.clothes = await api.getClothes();
@@ -50,6 +55,9 @@ const store = new Vuex.Store({
     },
     addToCart: function({ commit }, cartItem) {
       commit(_mutations.addToCart, cartItem);
+    },
+    clearCart: function({ commit }) {
+      commit(_mutations.clearCart);
     }
   },
   getters: {

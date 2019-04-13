@@ -7,7 +7,7 @@
       <a-menu-item key="app" disabled>
         <a-icon type="appstore"/>Navigation Two
       </a-menu-item>
-      <a-menu-item @click="onShowCartClick" :selectable="false">
+      <a-menu-item @click="onShowCartClick" :selectable="false" :disabled="!cartCount">
         <a-badge :count="cartCount">
           <a href="#" class="head-example" >
             <a-icon type="shopping" :style="{ fontSize: '1.5em' }"/>

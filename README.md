@@ -7,7 +7,8 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+1. npm run serve
+2. Press ctrl+f5 to run the api while running the Vue site
 ```
 
 ### Compiles and minifies for production

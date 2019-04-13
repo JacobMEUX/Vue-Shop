@@ -12,7 +12,7 @@
     </a-spin>
     <template class="ant-card-actions" slot="actions">
       <a>
-        <a-icon type="question-circle"/>View
+        <a-icon type="question-circle"/> View
       </a>
       <a-popconfirm
         title="Are you sure you want to add this to your cart?"
@@ -21,8 +21,7 @@
         cancelText="No"
       >
         <a-icon slot="icon" type="exclamation-circle" theme="twoTone"/>
-        <a-icon type="shopping-cart"/>
-        Add to cart
+        <a-icon type="shopping-cart"/> Add to cart
       </a-popconfirm>
     </template>
     <a-card-meta :title="item.name" :description="item.description">
@@ -35,7 +34,7 @@
 </template>
 
 <script>
-import { actions } from '../../store';
+import { actions } from "../../store";
 
 export default {
   props: {
@@ -47,14 +46,14 @@ export default {
     };
   },
   methods: {
-    onGotoClick: function () {
+    onGotoClick: function() {
       // Go to page with product
     },
-    onImageLoaded: function () {
+    onImageLoaded: function() {
       this.loaded = true;
     },
-    onAddToCartClick: function () {
-      this.$store.dispatch(actions.addToCart, this.item)
+    onAddToCartClick: function() {
+      this.$store.dispatch(actions.addToCart, this.item);
     }
   }
 };
