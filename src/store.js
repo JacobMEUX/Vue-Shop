@@ -1,60 +1,46 @@
 /* eslint-disable no-console */
 import Vue from "vue";
 import Vuex from "vuex";
-import api from "./api";
 
 Vue.use(Vuex);
 
 export const actions = {
-  fetchData: "fetchData",
   addToCart: "addToCart",
+  removeFromCart: "removeFromCart",
   clearCart: "clearCart"
 };
 
 export const getters = {
-  cartCount: "cartCount"
+  cartCount: "cartCount",
 };
 
 const _mutations = {
-  addClothing: "addClothing",
-  addBrand: "addBrand",
   addToCart: "addToCart",
+  removeFromCart: "removeFromCart",
   clearCart: "clearCart",
-  fetchData: "fetchData"
 };
 
 const store = new Vuex.Store({
   state: {
-    clothes: [],
-    brands: [],
     cart: []
   },
   mutations: {
-    addClothing(state, payload) {
-      // API kald til at tilføje det til databasen
-      state.clothes.push(payload);
-    },
-    addBrand(state, payload) {
-      // API kald til at tilføje det til databasen
-      state.brands.push(payload);
-    },
     addToCart(state, payload) {
       state.cart.push(payload);
     },
+    removeFromCart(state, payload) {
+      state.cart.splice(payload, 1);
+    },
     clearCart(state) {
       state.cart = [];
-    },
-    fetchData: async function(state) {
-      state.brands = await api.getBrands();
-      state.clothes = await api.getClothes();
     }
   },
   actions: {
-    fetchData: async function({ commit }) {
-      commit(_mutations.fetchData);
-    },
     addToCart: function({ commit }, cartItem) {
       commit(_mutations.addToCart, cartItem);
+    },
+    removeFromCart: function({ commit }, index) {
+      commit(_mutations.removeFromCart, index);
     },
     clearCart: function({ commit }) {
       commit(_mutations.clearCart);

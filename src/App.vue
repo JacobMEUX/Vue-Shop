@@ -1,26 +1,23 @@
 <template>
   <div id="app">
     <Navbar/>
-    <ItemCards :items="clothes"/>
+    <router-view class="content"/>
   </div>
 </template>
 
 <script>
-import store, { actions } from "./store.js";
-import { mapState } from "vuex";
-import ItemCards from "./components/items/ItemCards";
 import Navbar from "./components/Navbar";
 
 export default {
   name: "app",
-  store,
   components: {
-    ItemCards,
     Navbar
-  },
-  computed: mapState(["brands", "clothes"]),
-  created: function() {
-    this.$store.dispatch(actions.fetchData);
   }
 };
 </script>
+
+<style scoped>
+.content {
+  padding: 30px;
+}
+</style>

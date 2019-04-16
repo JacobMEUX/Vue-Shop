@@ -1,19 +1,19 @@
 div.loader {
-    font-size: 24px;
-    margin-top: 5%;
-    margin-bottom: 20px;
-    text-align: center;
-    display: block;
+  font-size: 24px;
+  margin-top: 5%;
+  margin-bottom: 20px;
+  text-align: center;
+  display: block;
 }
 
 .col-margin {
-    margin-top: 1%;
+  margin-top: 1%;
 }
 
 .row-margin {
-    margin-top: 1%;
+  margin-top: 1%;
 }
 
 .text-center {
-    text-align: center;
+  text-align: center;
 }

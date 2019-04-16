@@ -5,19 +5,22 @@ const api = axios.create({
   timeout: 4000
 });
 
+function get(url) {
+  try {
+    return api.get(url);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export default {
-  getBrands: async () => {
-    try {
-      return (await api.get("/brand")).data;
-    } catch (error) {
-      console.log(error);
-    }
+  getBrands: () => {
+    return get("/brands");
   },
-  getClothes: async () => {
-    try {
-      return (await api.get("/clothing")).data;
-    } catch (error) {
-      console.log(error);
-    }
+  getClothes: () => {
+    return get("/clothing");
+  },
+  getClothesById: id => {
+    return get("/clothing/" + id);
   }
 };

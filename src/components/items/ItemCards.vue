@@ -1,7 +1,7 @@
 <template>
   <div>
     <a-row :gutter="40">
-      <a-col v-for="item in items" :key="item.id" class="col-margin" :span="4">
+      <a-col v-for="(item) in items" :key="item.clothingId" class="col-margin" :span="6">
         <ItemCard :item="item"/>
       </a-col>
     </a-row>

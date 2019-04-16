@@ -7,7 +7,7 @@
     @close="onCloseCart"
     :visible="showCart"
   >
-    <CartItem v-for="item in cart" v-bind:key="item.id" :item="item"/>
+    <CartItem v-for="(item, index) in cart" v-bind:key="item.id" :item="item" :index="index"/>
     <a-row class="row-margin">
       <a-row>
         <h5>{{totalPrice}} DKK</h5>
