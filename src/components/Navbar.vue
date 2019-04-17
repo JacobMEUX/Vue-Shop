@@ -13,20 +13,28 @@
           </a>
         </a-badge>
       </a-menu-item>
+      <a-menu-item>
+        <NewItem>
+          <a href="#" class="head-example">
+            <a-icon type="plus" :style="{ fontSize: '1.5em' }"/>
+          </a>
+        </NewItem>
+      </a-menu-item>
     </a-menu>
-
     <CartDrawer ref="cartdrawer"/>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import CartDrawer from "./cart/CartDrawer";
 import { getters } from "../store";
+import CartDrawer from "./cart/CartDrawer";
+import NewItem from "./modals/NewItem";
 
 export default {
   components: {
-    CartDrawer
+    CartDrawer,
+    NewItem
   },
   computed: {
     ...mapGetters([getters.cartCount])

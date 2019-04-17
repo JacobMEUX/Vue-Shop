@@ -18,7 +18,7 @@ namespace DataLayer.Entities
 
         [Required]
         [Column(TypeName = "decimal(5, 2)")]
-        public decimal Price { get; set; }
+        public int Price { get; set; }
         [Required]
         public Sizes Size { get; set; }
         [Required]

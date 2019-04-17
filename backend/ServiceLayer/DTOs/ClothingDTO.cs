@@ -8,7 +8,6 @@ namespace ServiceLayer.DTOs
 {
     public class ClothingDTO
     {
-        [Required]
         public int ClothingId { get; set; }
         [Required]
         public string Title { get; set; }

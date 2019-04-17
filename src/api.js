@@ -5,7 +5,28 @@ const api = axios.create({
   timeout: 4000
 });
 
-function get(url) {
+export default {
+  getBrands: () => {
+    return _get("/brand");
+  },
+  getCategories: () => {
+    return _get("/category");
+  },
+  getClothes: () => {
+    return _get("/clothing");
+  },
+  insertClothes: (payload) => {
+    return _post("/clothing", payload);
+  },
+  getClothesById: id => {
+    return _get("/clothing/" + id);
+  },
+  deleteClothesById: id => {
+    return _delete("/clothing/" + id);
+  }
+};
+
+function _get (url) {
   try {
     return api.get(url);
   } catch (error) {
@@ -13,14 +34,19 @@ function get(url) {
   }
 }
 
-export default {
-  getBrands: () => {
-    return get("/brands");
-  },
-  getClothes: () => {
-    return get("/clothing");
-  },
-  getClothesById: id => {
-    return get("/clothing/" + id);
+function _delete (url) {
+  try {
+    return api.delete(url);
+  } catch (error) {
+    console.log(error);
   }
-};
+}
+
+function _post (url, payload) {
+  try {
+    return api.post(url, payload);
+  } catch (error) {
+    console.log(error);
+  }
+}
+

@@ -10,10 +10,12 @@ export default new Router({
   mode: "history",
   routes: [
     {
+      name: "store",
       path: "/",
       component: Store
     },
     {
+      name: "details",
       path: "/details/:id",
       component: Details,
       props: true

@@ -11,18 +11,12 @@
       <a-icon v-show="!loaded" slot="indicator" type="loading" spin/>
     </a-spin>
     <template class="ant-card-actions" slot="actions">
-      <a>
+      <router-link :to="{ name: 'details', params: { id: item.clothingId, sentItem: item } }">
         <a-icon type="question-circle"/> View
-      </a>
-      <a-popconfirm
-        title="Are you sure you want to add this to your cart?"
-        @confirm="onAddToCartClick"
-        okText="Yes"
-        cancelText="No"
-      >
-        <a-icon slot="icon" type="exclamation-circle" theme="twoTone"/>
-        <a-icon type="shopping-cart"/> Add to cart
-      </a-popconfirm>
+      </router-link>
+        <AddToCart :item="item">
+          <a-icon type="shopping-cart"/> Add to cart
+        </AddToCart>
     </template>
     <a-card-meta :title="item.name" :description="item.description">
       <a-divider orientation="right">Price</a-divider>
@@ -34,9 +28,12 @@
 </template>
 
 <script>
-import { actions } from "../../store";
+import AddToCart from "../cart/AddToCart"
 
 export default {
+  components: {
+    AddToCart
+  },
   props: {
     item: Object
   },
@@ -51,9 +48,6 @@ export default {
     },
     onImageLoaded: function() {
       this.loaded = true;
-    },
-    onAddToCartClick: function() {
-      this.$store.dispatch(actions.addToCart, this.item);
     }
   }
 };
