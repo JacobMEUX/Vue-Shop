@@ -5,7 +5,7 @@
         <a-row :gutter="48" v-if="!isLoaded">
           <a-col :span="8">
             <a-card>
-              <img :alt="item.image.altText" :src="'/' + item.image.url" slot="cover">
+              <img :alt="item.image.altText" :src="imageUrl" slot="cover">
             </a-card>
           </a-col>
           <a-col :span="16">
@@ -42,12 +42,15 @@ export default {
     };
   },
   computed: {
-    isLoaded: function() {
+    isLoaded: function () {
       return this.item === null;
+    },
+    imageUrl: function () {
+      return (this.item.image.url.includes("Images/")) ? "/" + this.item.image.url : this.item.image.url
     }
   },
   methods: {
-    onDeleteClick: function() {
+    onDeleteClick: function () {
       const hide = this.$message.loading("Deleting item..", 0);
       this.$api.deleteClothesById(this.id).then(() => {
         hide();
@@ -56,7 +59,7 @@ export default {
       });
     }
   },
-  created: function() {
+  created: function () {
     // If an item was sent as a prop then it uses that.
     // else it gets the item from the API.
     if (!this.sentItem) {

@@ -18,16 +18,13 @@ namespace DataLayer.Entities
 
         [Required]
         [Column(TypeName = "decimal(5, 2)")]
-        public int Price { get; set; }
-        [Required]
+        public decimal Price { get; set; }
         public Sizes Size { get; set; }
-        [Required]
         public Colors Color { get; set; }
         [Required]
         public int FKBrandId { get; set; }
         [Required]
         public int FKCategoryId { get; set; }
-        [Required]
         public int FKImageId { get; set; }
         public Category Category { get; set; }
         public Brand Brand { get; set; }

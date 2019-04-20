@@ -15,10 +15,6 @@ namespace DataLayer.ExtentionMethods
 
             query = (options.CategoryId != null) ? query.Where(o => o.FKCategoryId == options.CategoryId) : query;
 
-            query = (options.Color != null) ? query.Where(o => o.Color == options.Color) : query;
-
-            query = (options.Size != null) ? query.Where(o => o.Size == options.Size) : query;
-
             query = !string.IsNullOrWhiteSpace(options.Search) ? query.Where(o => o.Title.ToLower().Contains(options.Search.ToLower())) : query;
 
             if (options.SortOrder != null)

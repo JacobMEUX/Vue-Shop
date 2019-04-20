@@ -15,10 +15,10 @@
         <a-textarea
           v-model="description"
           v-decorator="['description', {
-                  rules: [{ required: true, message: 'Please enter url description' }]
+                  rules: [{ required: true, message: 'Please enter a description' }]
                 }]"
           :rows="4"
-          placeholder="please enter url description"
+          placeholder="Please enter a description"
         />
       </a-form-item>
 
@@ -58,20 +58,28 @@
             :value="brand.brandId"
           >{{brand.name}}</a-select-option>
         </a-select>
-        <a-form-item label="Price">
+      </a-form-item>
+      <a-form-item label="Price">
           <a-input
             v-model="price"
             step="0.01"
             v-decorator="['price', {
                   rules: [{ required: true, message: 'Please enter a price' }]
                 }]"
-            :rows="4"
             placeholder="Please enter a price"
             addonAfter="DKK"
             type="number"
           />
         </a-form-item>
-      </a-form-item>
+        <a-form-item label="Image">
+          <a-input
+            v-model="image"
+            v-decorator="['Image', {
+                  rules: [{ required: true, message: 'Please enter an image url' }]
+                }]"
+            placeholder="Please enter an image url"
+          />
+        </a-form-item>
     </a-form>
   </div>
 </template>
@@ -89,7 +97,8 @@ export default {
       description: "",
       brand: null,
       category: null,
-      price: null
+      price: null,
+      image: null
     };
   },
   created: function() {

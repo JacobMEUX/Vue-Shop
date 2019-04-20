@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataLayer.Migrations
 {
     [DbContext(typeof(ShopContext))]
-    [Migration("20190408210407_RemovedCostumerTable")]
-    partial class RemovedCostumerTable
+    [Migration("20190417104206_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -296,8 +296,7 @@ namespace DataLayer.Migrations
 
             modelBuilder.Entity("DataLayer.Entities.Costumer", b =>
                 {
-                    b.Property<string>("Name")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("CostumerId");
 
                     b.Property<string>("Address")
                         .IsRequired();
@@ -305,11 +304,14 @@ namespace DataLayer.Migrations
                     b.Property<string>("Email")
                         .IsRequired();
 
+                    b.Property<string>("Name")
+                        .IsRequired();
+
                     b.Property<int>("PaymentMethod");
 
-                    b.HasKey("Name");
+                    b.HasKey("CostumerId");
 
-                    b.ToTable("Costumer");
+                    b.ToTable("Costumers");
                 });
 
             modelBuilder.Entity("DataLayer.Entities.Image", b =>
@@ -391,8 +393,6 @@ namespace DataLayer.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CostumerName");
-
                     b.Property<DateTime>("Date");
 
                     b.Property<string>("FKCostumerId")
@@ -400,7 +400,7 @@ namespace DataLayer.Migrations
 
                     b.HasKey("OrderId");
 
-                    b.HasIndex("CostumerName");
+                    b.HasIndex("FKCostumerId");
 
                     b.ToTable("Orders");
                 });
@@ -445,7 +445,8 @@ namespace DataLayer.Migrations
                 {
                     b.HasOne("DataLayer.Entities.Costumer", "Costumer")
                         .WithMany("Orders")
-                        .HasForeignKey("CostumerName");
+                        .HasForeignKey("FKCostumerId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DataLayer.Entities.OrderLine", b =>

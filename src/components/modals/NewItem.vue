@@ -76,14 +76,16 @@ export default {
           description: this.$refs.clothingForm.description,
           fkCategoryId: this.$refs.clothingForm.category,
           fkBrandId: this.$refs.clothingForm.brand,
-          price: parseFloat(Number(this.$refs.clothingForm.price).toFixed(2)),
+          price: parseFloat(this.$refs.clothingForm.price),
           image: {
-            altText: "test",
-            url: "tttest"
+            altText: "this.$refs.clothingForm.title",
+            url: this.$refs.clothingForm.image
           }
         };
       } else if (this.key === "brand") {
+        dto = {};
       } else if (this.key === "category") {
+        dto = {};
       }
 
       setTimeout(() => {
