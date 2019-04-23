@@ -91,7 +91,7 @@ namespace DataLayer.Repositories
 
             try
             {
-                List<Clothing> clothing = await query.Skip((options.CurrentPage - 1) * options.PageSize).Take(options.PageSize).ToListAsync(); 
+                List<Clothing> clothing = await query.ToListAsync(); 
                 LogInformation("Successfully fetched a list of clothing");
                 return clothing;
             }
