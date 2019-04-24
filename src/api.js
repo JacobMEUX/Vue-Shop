@@ -21,6 +21,12 @@ export default {
   getClothesById: id => {
     return _get("/clothing/" + id);
   },
+  getClothesFilter: filter => {
+      return _getWithPayload("/clothing/filtered", {
+        params: filter
+      }
+    )
+  },
   deleteClothesById: id => {
     return _delete("/clothing/" + id);
   }
@@ -29,6 +35,14 @@ export default {
 function _get (url) {
   try {
     return api.get(url);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function _getWithPayload (url, payload) {
+  try {
+    return api.get(url, payload);
   } catch (error) {
     console.log(error);
   }

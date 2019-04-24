@@ -4,12 +4,13 @@
       <a-col :span="4" class="col-margin" style="margin-right: 2%">
         <a-form>
           <a-form-item label="Search">
-            <a-input-search v-model="search" placeholder="Search..." @change="onSearchChange"/>
+            <a-input-search v-model="search" placeholder="Search..." @change="onFormChange"/>
           </a-form-item>
 
           <a-form-item label="Brand">
             <a-select
               v-model="brand"
+              @change="onFormChange"
               showSearch
               placeholder="Please select a brand"
               optionFilterProp="children"
@@ -26,6 +27,7 @@
           <a-form-item label="Category">
             <a-select
               v-model="category"
+              @change="onFormChange"
               showSearch
               placeholder="Please select a category"
               optionFilterProp="children"
@@ -78,13 +80,32 @@ export default {
     });
   },
   methods: {
-    onSearchChange: function() {},
     filterOption(input, option) {
       return (
         option.componentOptions.children[0].text
           .toLowerCase()
           .indexOf(input.toLowerCase()) >= 0
       );
+    },
+    onFormChange: function() {
+      // Clears timer if it exists.
+      // Prevents from searching before user
+      // is done typing.
+      if (this.timer) {
+        clearTimeout(this.timer);
+        this.timer = null;
+      }
+      this.timer = setTimeout(() => {
+        const filter = {
+          BrandId: this.brand,
+          CategoryId: this.category,
+          Search: this.search
+        };
+
+        this.$api.getClothesFilter(filter).then(response => {
+          this.items = response.data;
+        });
+      }, 300);
     }
   }
 };

@@ -42,9 +42,9 @@ namespace WebApi.Controllers
             return clothingDTO;
         }
 
-        // GET api/clothing/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<List<ClothingDTO>>> Get(SortFilterSearchOptionsDTO options)
+        // GET api/clothing/filtered
+        [HttpGet("filtered")]
+        public async Task<ActionResult<List<ClothingDTO>>> Get([FromQuery]SortFilterSearchOptionsDTO options)
         {
             List<ClothingDTO> clothingDTOs = await _clothingService.GetClothing(options);
             return clothingDTOs;
