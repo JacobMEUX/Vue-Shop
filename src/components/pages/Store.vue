@@ -15,7 +15,9 @@
               placeholder="Please select a brand"
               optionFilterProp="children"
               :filterOption="filterOption"
+              :loading="!brands.length"
             >
+              <a-select-option :key="null" :value="null">All</a-select-option>
               <a-select-option
                 v-for="brand in brands"
                 :key="brand.brandId"
@@ -32,7 +34,9 @@
               placeholder="Please select a category"
               optionFilterProp="children"
               :filterOption="filterOption"
+              :loading="!brands.length"
             >
+              <a-select-option :key="null" :value="null">All</a-select-option>
               <a-select-option
                 v-for="category in categories"
                 :key="category.categoryId"

@@ -22,43 +22,6 @@
         />
       </a-form-item>
 
-      <a-form-item label="Category">
-        <a-select
-          v-model="category"
-          showSearch
-          placeholder="Please select a category"
-          optionFilterProp="children"
-          :filterOption="filterOption"
-          v-decorator="['category', {
-                  rules: [{ required: true, message: 'Please select a category' }]
-                }]"
-        >
-          <a-select-option
-            v-for="category in categories"
-            :key="category.categoryId"
-            :value="category.categoryId"
-          >{{category.name}}</a-select-option>
-        </a-select>
-      </a-form-item>
-
-      <a-form-item label="Brand">
-        <a-select
-          v-model="brand"
-          showSearch
-          placeholder="Please select a brand"
-          optionFilterProp="children"
-          :filterOption="filterOption"
-          v-decorator="['brand', {
-                  rules: [{ required: true, message: 'Please select a brand' }]
-                }]"
-        >
-          <a-select-option
-            v-for="brand in brands"
-            :key="brand.brandId"
-            :value="brand.brandId"
-          >{{brand.name}}</a-select-option>
-        </a-select>
-      </a-form-item>
       <a-form-item label="Price">
           <a-input
             v-model="price"
@@ -71,6 +34,7 @@
             type="number"
           />
         </a-form-item>
+
         <a-form-item label="Image">
           <a-input
             v-model="image"
@@ -87,28 +51,24 @@
 <script>
 export default {
   props: {
-    onCancel: Function
+    onCancel: Function,
+    item: Object
   },
   data() {
     return {
-      brands: [],
-      categories: [],
       title: "",
       description: "",
-      brand: null,
-      category: null,
-      price: null,
-      image: null
+      price: 250,
+      image: ""
     };
   },
-  created: function() {
-    this.$api.getBrands().then(response => {
-      this.brands = response.data;
-    });
-
-    this.$api.getCategories().then(response => {
-      this.categories = response.data;
-    });
+  created: function () {
+    if (this.item) {
+      this.title = this.item.title;
+      this.description = this.item.description;
+      this.price = this.item.price;
+      this.image = this.item.image.url;
+    }
   },
   methods: {
     filterOption(input, option) {

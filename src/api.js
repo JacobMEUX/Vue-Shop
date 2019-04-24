@@ -18,6 +18,9 @@ export default {
   insertClothes: (payload) => {
     return _post("/clothing", payload);
   },
+  updateClothes: (id, payload) => {
+    return _put("/clothing/" + id, payload);
+  },
   getClothesById: id => {
     return _get("/clothing/" + id);
   },
@@ -64,3 +67,10 @@ function _post (url, payload) {
   }
 }
 
+function _put (url, payload) {
+  try {
+    return api.put(url, payload);
+  } catch (error) {
+    console.log(error);
+  }
+}

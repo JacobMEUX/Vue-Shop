@@ -11,14 +11,18 @@
         @tabChange="key => onTabChange(key, 'selected')"
       >
         <div>
-          <Clothing v-show="selected === 'clothing'" ref="clothingForm"/>
-          <Brand v-show="selected === 'brand'" ref="brandForm"/>
-          <Category v-show="selected === 'category'" ref="categoryForm"/>
+          <Clothing :item="item" v-show="selected === 'clothing'" ref="clothingForm"/>
+          <Brand :brandIdProp="item.fkBrandId" v-show="selected === 'brand'" ref="brandForm"/>
+          <Category
+            :categoryIdProp="item.fkCategoryId"
+            v-show="selected === 'category'"
+            ref="categoryForm"
+          />
         </div>
       </a-card>
       <template slot="footer">
         <a-button key="back" @click="onClose">Cancel</a-button>
-        <a-button key="submit" type="primary" :loading="creating" @click.prevent="onCreate">Create</a-button>
+        <a-button key="submit" type="primary" :loading="updating" @click.prevent="onUpdate">Update</a-button>
       </template>
     </a-modal>
   </div>
@@ -38,10 +42,15 @@ export default {
     Brand
   },
   mixins: [itemTabsMixin],
-  data() {
+  props: {
+    itemProp: Object,
+    onEdit: Function
+  },
+  data: function() {
     return {
-      creating: false,
+      updating: false,
       visible: false,
+      item: this.itemProp
     };
   },
   methods: {
@@ -51,14 +60,23 @@ export default {
     onClose() {
       this.visible = false;
     },
-    onCreate() {
-      this.creating = true;
+    onUpdate() {
+      this.updating = true;
+      const brandObject = this.$refs.brandForm.brands.find(obj => {
+        return obj.brandId == this.$refs.brandForm.brandId;
+      });
+
+      const categoryObject = this.$refs.categoryForm.categories.find(obj => {
+        return obj.categoryId == this.$refs.categoryForm.categoryId;
+      });
+
       const dto = {
+        clothingId: this.item.clothingId,
         title: this.$refs.clothingForm.title,
         description: this.$refs.clothingForm.description,
-        fkCategoryId: this.$refs.categoryForm.categoryId,
-        fkBrandId: this.$refs.brandForm.brandId,
         price: parseFloat(this.$refs.clothingForm.price),
+        brand: brandObject,
+        category: categoryObject,
         image: {
           altText: this.$refs.clothingForm.title,
           url: this.$refs.clothingForm.image
@@ -66,16 +84,17 @@ export default {
       };
 
       this.$api
-        .insertClothes(dto)
+        .updateClothes(this.item.clothingId, dto)
         .then(() => {
           this.$message.success("The item has been created");
+          this.onEdit(dto);
           this.visible = false;
         })
         .catch(err => {
           this.$message.error(err);
         })
         .finally(() => {
-          this.creating = false;
+          this.updating = false;
         });
     }
   }
